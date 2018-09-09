@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+</style>
+</head>
+<body>
+    <div id="test">TEST</div>
+    <button id="button">Button</button>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true"></script>
+<script>
+    // オーバーライド元関数
+    function func() {
+        alert("execute function");
+    }
+
+    // イベント定義
+    require(["dojo/dom","dojo/on","dojo/domReady!"],function(dom,on){
+        on(dom.byId("button"), "click", function(){
+            func();
+        });
+    });
+
+    // オーバーライド
+    require(["dojo/dom","dojo/on","dojo/domReady!"],function(dom,on){
+        var oldFunc = window.func;
+        window.func = function() {
+            var test = dom.byId("test");
+            test.innerHTML = "override";
+            oldFunc();                      // オーバーライド前の関数を実行する
+        };
+    });
+</script>
+</html>

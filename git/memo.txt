@@ -1,0 +1,278 @@
+-------------------------------------------------
+
+gitの基本
+
+-------------------------------------------------
+
+gitとは分散リポジトリを用いたバージョン管理システム
+差分ではなく、スナップショットで記録する
+
+[分散リポジトリ]
+各端末にリポジトリを構成して、それぞれ同期をとる。
+
+・リモートリポジトリ
+　サーバマシンに構成するリポジトリ。
+
+・ローカルリポジトリ
+　ローカルマシンに構成するリポジトリ。
+
+[ローカルリポジトリ]
+
+・リポジトリ
+　スナップショットを記録する場所
+
+・ステージ
+　コミットする変更を準備する場所
+
+・ワークツリー
+　ファイルを変更する作業場
+
+-------------------------------------------------
+
+
+--------------------------------------------------------------------
+１．リポジトリの作成と環境設定(test1)
+・git init
+・git config --global user.name "利用ユーザー名"
+・git config --global user.email 利用ユーザーのメールアドレス
+・git config --global code.editor  "(エディタ) --wait'   #エディタを変更する場合の設定（vimのままであれば変更なし）
+
+$ mkdir test1
+$ cd test1
+$ git init
+
+.gitフォルダ作成される
+
+$ ls .git
+config  description  HEAD  hooks  info  objects  refs
+
+objects : リポジトリの本体
+config  : 各種設定ファイル
+
+$ git config --global user.name "利用ユーザー名"
+$ git config --global user.email 利用ユーザーのメールアドレス
+
+
+--------------------------------------------------------------------
+２．GitHubからatomリポジトリをコピー(test2)
+・git clone <リポジトリ名>
+
+mkdir test2
+cd test2
+
+GitHubからatomを検索
+clone or downloadをクリック
+
+clone with HTTPSの内容をコピー
+
+コマンド実行
+$ git clone https://github.com/atom/atom.git
+
+
+--------------------------------------------------------------------
+３．ファイルの変更とコミット(test3)
+・git add <ファイル名>
+・git add <ディレクトリ名>
+・git add .  (all)
+・git commit (エディタ起動)
+・git commit -m <メッセージ>
+
+$ mkdir test3
+$ cd test3
+$ git init
+$ vi testfile.txt
+$ git add testfile.txt
+$ git commit
+エディタが開くのでinitial commitを先頭に入力して保存（初回のみ）
+
+※warning: LF will be replaced by CRLF in testfile.txt.
+The file will have its original line endings in your working directory.
+gitがLFをCRLFに変換するための警告
+設定で無効かできる（git config --global core.autoCRLF false）
+
+
+コミットメッセージ
+１行目　変更の要約
+２行目　空白
+３行目　変更の詳細
+
+
+--------------------------------------------------------------------
+４．変更の確認(test3)
+・git status
+
+$ git status
+On branch master
+nothing to commit, working tree clean ※変更がない
+
+$ vi testfile.txt  ※適当に編集
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   testfile.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add testfile.txt
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   testfile.txt
+
+$ git commit -v
+[master d208b30] git statusコマンド追加
+ 1 file changed, 2 insertions(+)
+
+
+--------------------------------------------------------------------
+５．差分の確認(test3)
+
+#git addする前の変更分
+・$git diff
+・$git diff <ファイル名>
+
+#git addした後の変更分
+・git diff --staged
+
+$ vi testfile2.txt
+$ git diff
+diff --git a/testfile2.txt b/testfile2.txt
+index 7d57647..36a6429 100644
+--- a/testfile2.txt
++++ b/testfile2.txt
+@@ -1 +1,2 @@
+ testfile2
++git diff
+
+$ git add testfile2.txt
+$ git diff
+(何もなし）
+$ git diff --staged
+diff --git a/testfile2.txt b/testfile2.txt
+index 7d57647..36a6429 100644
+--- a/testfile2.txt
++++ b/testfile2.txt
+@@ -1 +1,2 @@
+ testfile2
++git diff
+
+$ git commit -m "git diff テスト"
+[master 6aec88f] git diff テスト
+ 1 file changed, 1 insertion(+)
+
+--------------------------------------------------------------------
+６．変更履歴(test3)
+・$ git log
+・$ git log --oneline     #一行のみ
+・$ git log -p index.html #対象ファイル指定
+・$ git log -n <コミット数>
+
+$ git log
+commit 6aec88fab3226e3dc0c070138fe441e6041f3c58 (HEAD -> master)
+Author: (...)
+Date:   Sat Sep 8 18:45:29 2018 +0900
+
+    git diff テスト
+
+commit d9c9181e62df10c9a79e139ab78e72facb79d689   # コミットのハッシュ
+Author: (...)
+Date:   Sat Sep 8 18:36:27 2018 +0900
+
+    git status2
+
+commit d208b3015e263245b4227f462136a5aa47c3e8a1
+Author: (...)
+Date:   Sat Sep 8 18:29:18 2018 +0900
+
+    git statusコマンド追加
+
+commit 3ff12a2cc7ed6880f72ee6474f48aa66e35f40d1
+Author: (...)
+Date:   Sat Sep 8 18:13:36 2018 +0900
+
+    Initial commit
+
+
+--------------------------------------------------------------------
+７．ファイルの削除(test3)
+
+$ git rm <ファイル名>
+$ git rm -r <ディレクトリ名>
+$ git rm --cached <ファイル名> #gitの記録から削除してファイル自体は残す
+
+$ git rm testfile2.txt
+rm 'testfile2.txt'
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        deleted:    testfile2.txt
+
+
+$ git commit -m "ファイル削除"
+[master b816461] ファイル削除
+ 1 file changed, 2 deletions(-)
+ delete mode 100644 testfile2.txt
+
+
+--------------------------------------------------------------------
+８．ファイルの移動(test3)
+・$ git mv <旧ファイル名> <新ファイル名>
+
+$ git mv testfile.txt testfile2.txt
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        renamed:    testfile.txt -> testfile2.txt
+
+
+$ git mv testfile2.txt testfile.txt
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+
+--------------------------------------------------------------------
+９．GitHubプッシュ(github_test)
+
+９－１．GitHubのユーザ登録
+https://github.com/
+サインアップからユーザー登録を行う
+ユーザー名、メールアドレス、パスワードを入力
+「Unlimited pulibc repositories for free」（無償版）を選択する
+アンケートを入力する
+emailからのベリファイで登録完了
+
+９－２．GitHubのリポジトリ作成
+ログイン後、your profice→Repositories→Newを選択
+リポジトリ名と公開情報(public）を選択して作成
+※privateは有償
+これで作成完了
+
+９－３.GitHubへプッシュ
+
+#ローカルリポジトリ登録
+$ mkdir git_test
+$ cd git_test
+$ vi test.txt
+$ git add test.txt
+$ git commit -m "new file"
+
+#リモートリポジトリの追加
+$ git remote add origin https://github.com/(ユーザー)/(リポジトリ名).git
+
+#push(-u を指定すると次回以降はgit pushのみで行える）ユーザー、パスワードを聞かれるので入力
+$ git push -u origin master
+
+

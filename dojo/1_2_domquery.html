@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<!--
+    CSSセレクタの利用方法：dojo.query
+
+    このサンプルでは、CSSセレクタを用いてDOM操作を行っている。
+
+    1.CSSセレクタ
+        <dom elementの配列> = dojo.query(<selector>)
+
+        セレクタを使用してDOMの取得を行う。
+        配列が返ってくるので、参照は[0]などを行う必要がある。
+        
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+.testClass {
+    color: red;
+}
+</style>
+</head>
+<body>
+    <h1 class="testClass">TEST CLASS</h1>
+    <div>
+        <span name="testName">NAME!</span>
+            <a href="http://www.google.com">click!</a>
+        <span>
+            <a>test</a>
+        </span>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js"></script>
+    <script>
+        dojo.ready(function(){
+            var i = dojo.query(".testClass");
+            var l = i[0];
+            l.innerHTML="test";
+            console.log(l.innerHTML);
+            console.log(dojo.query("div > [name='testName']")[0]);
+            console.log(dojo.query("div > a")[0])
+        });
+    </script>
+</body>
+</html>

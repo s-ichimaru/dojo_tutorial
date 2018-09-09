@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<!--
+    マウスイベント処理（mouseイベント)：dojo/mouse 
+
+    このサンプルでは、ONイベントに加え、マウスの右クリックの制御を行っている
+
+    １．dojo/mouse
+        マウス操作を行うためのコンポーネント
+
+    2. dojo/mouseの属性
+        mouse.enter - マウスカーソルが乗った
+        mouse.leave - マウスカーソルが外れた
+        mouse.isLeft(event)  - 左クリック押下
+        mouse.isRight(event) - 右クリック押下
+
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+</style>
+</head>
+<body>
+    <div id="div">マウスカーソルを合わせてください。</div>
+    <button id="showDiv">表示</button>
+    <button id="hideDiv">非表示</button>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true"></script>
+    <script>
+        require(["dojo/dom", "dojo/on", "dojo/mouse", "dojo/domReady!"], function(dom, on, mouse){
+            var div = dom.byId("div");
+            var showDiv = dom.byId("showDiv");
+            var hideDiv = dom.byId("hideDiv");
+
+            on(div, mouse.enter, function(){
+                div.style.background = "yellow";
+            });
+
+            on(div, mouse.leave, function(){
+                div.style.background = "white";
+            });
+
+            on(showDiv, "click", function(){
+                div.style.display = "block";
+            });
+
+            on(hideDiv, "mousedown", function(event){  // mouse.downは動作しなかった
+                if (mouse.isLeft(event)) {
+                    alert("mouse left clicked");
+                    div.style.display = "none";
+                } else if (mouse.isRight(event)) {
+                    alert("mouse right clicked");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

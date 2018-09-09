@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<!--
+    DOMクラス操作 : dojo-class => domclass
+    
+    <boolean> = domclass.contains(<node>, <class>) : クラスが含まれるか否か
+    domclass.add(<node>, <class>) 　　: クラスの追加
+    domclass.remove(<node>, <class>) : クラスの削除
+    domclass.toggle(<node>. <class>) : クラスが存在する場合は削除、存在しない場合は追加
+    domclass.replase(<node>, <oldclass>, <newclass>)：クラスの置き換え
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+    .redText {
+        color:red;
+    }    
+</style>
+</head>
+<body>
+    <div id="node">ここの色を変更します</div>
+    <button id="addRed">赤色追加</button>
+    <button id="hasRed">赤色ですか？</button>
+    <button id="removeRed">赤色削除</button>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true"></script>
+    <script>
+        require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/domReady!"], function(dom, on, domclass){
+            on(dom.byId("addRed"), "click", function(){
+                domclass.add(dom.byId("node"), "redText");
+            });
+            on(dom.byId("hasRed"), "click", function(){
+                alert(domclass.contains(dom.byId("node"), "redText"));
+            });
+            on(dom.byId("removeRed"), "click", function(){
+                domclass.remove(dom.byId("node"), "redText");
+            });
+        });
+    </script>
+</body>
+</html>

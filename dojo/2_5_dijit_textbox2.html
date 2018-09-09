@@ -1,0 +1,84 @@
+
+<!DOCTYPE HTML>
+<!--
+    Dijit TextBoxs(dijit/registry)
+
+    ボタンイベントでテキストボックスのreadonlyを切り替える
+
+    1.dijit/registry
+
+        dijitはDOMを直接操作するのではなく、registry（メモリ）のオブジェクトを操作する
+
+        [NG] dom.byId(<id>)
+        [OK] registry.byId(<id>)   dojo >= 1.7
+        [OK] dijit.byId(<id>)      dojo < 1.7
+    
+        dijitのDOMを変更する場合、
+            registry.byId(<id>).domNode
+        とする
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dijit/themes/claro/claro.css">
+<style></style>
+</head>
+<body class="claro">
+
+    <div>
+        <label for="textBX"> Name: </label>
+        <input id="textBX" data-dojo-type="dijit/form/TextBox" data-dojo-props="placeHolder:'Enter a value'"/>
+    </div>
+    
+    <button id="readonlyBtn" data-dojo-type="dijit/form/Button" data-dojo-props="">ReadOnly</button>
+
+    <!-- script -->
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:false, parseOnLoad:false"></script>
+    <script>
+        // -----------------------------------------------------
+        // dojo < 1.7の記述例
+        // data-dojo-config="async:false"にすること
+        // -----------------------------------------------------
+		dojo.require("dijit.dijit");
+        dojo.require("dijit.form.Button");
+        dojo.require("dijit.form.TextBox");
+
+        require(["dojo/parser"
+                ,"dojo/domReady!"]
+                , function(parser){
+
+            parser.parse().then(function() {
+                dijit.byId("readonlyBtn").on("click", function(){
+                    var dijitText = dijit.byId("textBX");
+                    dijitText.setValue("Read Only!");
+                    dijitText.set("readonly", "true");
+                });
+            });
+        });
+
+/*        
+        // -----------------------------------------------------
+        // AMD(dojo >= 1.7)の記述例
+        // data-dojo-config="async:true"でもOK
+        // dijit.dijitはdijit/registryになる
+        // -----------------------------------------------------
+        require(["dojo/parser"
+                ,"dijit/form/TextBox"
+                ,"dijit/form/Button"
+                ,"dijit/registry"
+                ,"dojo/domReady!"]
+                , function(parser, TextBox, Button, registry){
+
+            parser.parse().then(function(){
+                registry.byId("readonlyBtn").on("click", function(){
+                    var dijitText = registry.byId("textBX");
+                    dijitText.setValue("Read Only!");
+                    dijitText.set("readonly", "true");
+                });
+            });
+        });
+*/        
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<!--
+    イベントハンドラ
+
+    on.emit(<node>, <event stinrg>, {bubbles:true, cancellable:ture})  イベントを伝達する
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+    .redText {
+        color:red;
+    } 
+    .bigText {
+        font-size: 50px;
+    }  
+</style>
+</head>
+<body>
+    <div id="node">ここの色を変更します</div>
+    <button id="addRed">赤色追加</button>
+    <button id="hasRed">赤色ですか？</button>
+    <button id="removeRed">赤色削除</button>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true"></script>
+    <script>
+        require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/domReady!"], function(dom, on, domclass){
+            on(dom.byId("addRed"), "click", function(){
+                domclass.add(dom.byId("node"), "redText");
+                on.emit(dom.byId("addRed"), "grow", {bubbles:true, cancellable:true});
+            });
+            on(dom.byId("hasRed"), "click", function(){
+                alert(domclass.contains(dom.byId("node"), "redText"));
+            });
+            on(dom.byId("removeRed"), "click", function(){
+                domclass.remove(dom.byId("node"), "redText");
+            });
+            on(dom.byId("addRed"), "grow", function(){
+                domclass.add(dom.byId("node"), "bigText");
+            });
+        });
+    </script>
+</body>
+</html>

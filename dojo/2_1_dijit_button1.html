@@ -1,0 +1,40 @@
+
+<!DOCTYPE HTML>
+<!--
+    Dijit Button(dom parser)
+
+    DOMパーサを用いてdijitボタンを作成する
+
+    1.sytleをclaroテーマで読み込む
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dijit/themes/claro/claro.css">
+
+    2.HTMLのdijit属性を解析するため、dojo.js読み込みでparseOnLoad:trueを設定する。
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true,parseOnLoad:true"></script>
+
+    3.dijitコンポーネント作成
+        <button id="btn" data-dojo-type="dijit/form/Button" data-dojo-props="onClick:function(){alert('click!')}">Click Me</button>
+
+        data-dojo-type  : dijitコンポーネントタイプ
+        data-dojo-props : dijitコンポーネントのプロパティ
+        
+    4.requireでdojo/parser, dojo/form/Buttonを読み込む
+        require(["dojo/parser","dijit/form/Button","dojo/domReady!"]);
+
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dijit/themes/claro/claro.css">
+<style></style>
+</head>
+<body class="claro">
+    <button id="btn" data-dojo-type="dijit/form/Button" data-dojo-props="onClick:function(){alert('click!')}">Click Me</button>
+
+    <!-- script -->
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true,parseOnLoad:true"></script>
+    <script>
+        require(["dojo/parser","dijit/form/Button","dojo/domReady!"]);
+    </script>
+</body>
+</html>

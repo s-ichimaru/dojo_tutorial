@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<!--
+    イベント処理（ONイベント)：dojo/on
+
+    このサンプルでは、ONイベントでボタンによるDOM操作を行っている
+
+    １．dojo/on
+        ONイベントを利用する場合のコンポーネント
+
+    2. on(<dom node>, <event>, <コールバック>)
+        event : click      クリック
+                mouseenter マウスが乗った
+                mouseleave マウスが離れた
+        
+        イベントとコールバックを紐づける
+
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+</style>
+</head>
+<body>
+    <div id="div">マウスカーソルを合わせてください。</div>
+    <button id="showDiv">表示</button>
+    <button id="hideDiv">非表示</button>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true"></script>
+    <script>
+        require(["dojo/dom", "dojo/on", "dojo/domReady!"], function(dom, on){
+            var div = dom.byId("div");
+            var showDiv = dom.byId("showDiv");
+            var hideDiv = dom.byId("hideDiv");
+
+            on(div, "mouseenter", function(){
+                div.style.background = "yellow";
+            });
+
+            on(div, "mouseleave", function(){
+                div.style.background = "white";
+            });
+
+            on(showDiv, "click", function(){
+                div.style.display = "block";
+            });
+
+            on(hideDiv, "click", function(){
+                div.style.display = "none";
+            });
+        });
+    </script>
+</body>
+</html>

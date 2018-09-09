@@ -1,0 +1,60 @@
+
+<!DOCTYPE HTML>
+<!--
+    Dijit Buttons(Component Types)
+
+    1.dijit.form.Button
+        通常ボタン
+        
+    2.dijit.form.DropDownButton
+        ドロップダウンボタン
+        メニューやその他のポップアップを押したときに表示されるボタン
+
+    3.dijit.form.ComboButton
+        コンボボタン
+        ドロップダウンを表示する矢印付きのボタン（多くの場合、メニュー）
+
+    4.dijit.form.ToggleButton
+        トグルボタン
+        ボタンとチェックボックスウィジェットを組み合わせたボタン
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dijit/themes/claro/claro.css">
+<style></style>
+</head>
+<body class="claro">
+
+    <!-- ボタン -->
+    <button id="btn" data-dojo-type="dijit/form/Button" data-dojo-props="onClick:function(){alert('click!')}">Button</button>
+
+    <!-- ドロップダウンボタン （タグはbuttonでも動作するが、公式サンプルではdivになっている）-->
+    <div data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass:'dijitIconAppliction'">
+        <span>DropDownButton</span>
+	
+        <div id="dropDownToolTip" data-dojo-type="dijit/TooltipDialog">
+            Drop down tool tip dialog
+        </div>
+    </div>
+	
+    <!-- コンボボタン （タグはbuttonでも動作するが、公式サンプルではdivになっている）-->
+	<div data-dojo-type="dijit/form/ComboButton" data-dojo-props="onClick:function(){alert('combo button was clicked.');}">
+        <span>ComboButton</span>
+        
+        <div id="ComboButtonDropDownToolTip" data-dojo-type="dijit/TooltipDialog">
+        Combo btn Drop down tool tip dialog
+        </div>
+    </div>
+
+    <!-- トグルボタン -->
+    <button data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:false, iconClass:'dijitCheckBoxIcon', onClick:function(){alert(' toggle button was clicked');}">ToggleButton</button>
+
+    <!-- script -->
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true,parseOnLoad:true"></script>
+    <script>
+        require(["dojo/parser","dijit/form/Button","dojo/domReady!"]);
+    </script>
+</body>
+</html>

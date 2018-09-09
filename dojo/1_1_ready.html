@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<!--
+    Dojoスクリプトの読み込みとonload：dojo.ready() dojo.byId()
+
+    このサンプルでは、ベージ初期表示時でh1 HTMLの内容を変更している。
+
+    1.Dojoスクリプトを読み込む
+        <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js"></script>
+
+        ローカルにダウンロードした場合は、そのURLを指定する
+
+    2.onload (ready)　
+        dojo.ready(<コールバック>)
+
+        ページ初期表示でHTMLロード後にコールバック関数が実行される。
+
+    3.DOM取得
+        <dom node> = dojo.byId(<dom id>)
+
+        IDを指定してDOMノードを取得する
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+</head>
+<body>
+    <h1 id="test">TEST</h1>
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js"></script>
+    <script>
+        dojo.ready(function(){
+            var i = dojo.byId("test");
+            console.log(i.innerHTML);
+            i.innerHTML="TEST2";
+        });
+    </script>
+</body>
+</html>

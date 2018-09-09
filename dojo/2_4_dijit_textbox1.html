@@ -1,0 +1,105 @@
+
+<!DOCTYPE HTML>
+<!--
+    Dijit TextBoxs(Component Types)
+
+    1.dijit.form.TextBox
+        基本的な<input type = "text">スタイルのフォームコントロール
+        type = "hidden"を使用すると、dijit.form.Formと互換性のある隠された入力を持つことができる
+
+    2.dijit.form.NumberTextBox
+        数値用の入力ウィジェット
+
+    3.dijit.form.NumberSpinner
+        入力を数値入力に制限し、上下の矢印ボタンを使用して数値を上下に「回転」させる入力ウィジェット
+
+    4.dijit.form.CurrencyTextBox
+        通貨用の入力ウィジェット
+
+    5.dijit.form.DateTextBox
+        カレンダーウィジェットから入力するか、日付を選択することができる、日付入力コントロール
+
+    6.dijit.form.TimeTextBox
+        任意の時間選択ウィジェットからタイピングまたは時間の選択を可能にする時間入力コントロール
+
+    7.dijit.form.ValidationTextBox
+        ユーザーの入力が（指定された基準に従って）有効であることを確認する入力ウィジェット
+
+    8.dijit.form.SimpleTextarea
+        <textarea>の単純なラッパー。同等の機能
+
+    9.dijit.form.Textarea
+        rowの自動拡張／縮小を行うtextarea
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dijit/themes/claro/claro.css">
+<style></style>
+</head>
+<body class="claro">
+
+    <!-- dijit.form.TextBox -->
+    <div>
+        <label for="textBX"> Name: </label>
+        <input id="textBX" data-dojo-type="dijit/form/TextBox" data-dojo-props="placeHolder:'Enter a value'"/>
+    </div>
+                
+    <!-- dijit.form.NumberTextBox -->
+    <div>
+        <label for="NtextBX"> Width: </label>
+        <input id="NtextBX" value="40" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="required:true, invalidMessage:'Numbers only!'"/>
+    </div>
+
+    <!-- dijit.form.NumberSpinner -->
+    <div>
+        <label for="NStextBX"> Number Spinner: </label>
+        <input id="NStextBX" data-dojo-type="dijit/form/NumberSpinner" value="10" data-dojo-props="constraints:{min:10,max:1000,places:2},smallDelta:5,placeHolder:'Enter a value'"/>
+    </div>
+
+    <!-- dijit.form.CurrencyTextBox -->
+    <div>
+        <label for="CtextBX"> Price: </label>
+        <input id="CtextBX" value="40" data-dojo-type="dijit/form/CurrencyTextBox" data-dojo-props="currency:'USD',required:true, invalidMessage:'Money only!'"/>
+    </div>
+                
+    <!-- dijit.form.DateTextBox -->
+    <div>
+        <label for="DtextBX"> Date: </label>
+        <input id="DtextBX" data-dojo-type="dijit/form/DateTextBox" value="2018-01-01" data-dojo-props=""/>
+    </div>
+            
+    <!-- dijit.form.TimeTextBox -->
+    <div>
+        <label for="TtextBX"> Time: </label>
+        <input id="TtextBX" data-dojo-type="dijit/form/TimeTextBox" value="T01:02:03" data-dojo-props=""/>
+    </div>
+
+    <!-- dijit.form.ValidationTextBox -->
+    <div>
+        <label for="VtextBX"> Validation box: </label>
+        <input id="VtextBX" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="regExp:'[\\w]+', placeHolder:'Enter a value'"/>
+    </div>
+            
+    <!-- dijit.form.SimpleTextarea -->
+    <div>
+        <label for="textArea"> Details: </label>
+        <textarea id="textArea" data-dojo-type="dijit/form/SimpleTextarea" data-dojo-props="cols:50,rows:7,onFocus:function(){console.log('simple text area focused');}, 
+        onBlur:function(){console.log('simple text area blurred');}"> Sample text here... </textarea>
+    </div>
+            
+    <!-- dijit.form.Textarea -->
+    <div>
+        <label for="textArea1"> MoreDetails: </label>
+        <textarea id="textArea1" data-dojo-type="dijit/form/Textarea" data-dojo-props="cols:50,onFocus:function(){console.log('text area focused');}, 
+        onBlur:function(){console.log('text area blurred');}"> Sample text here... </textarea>
+    </div>
+            
+    <!-- script -->
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true,parseOnLoad:true"></script>
+    <script>
+        require(["dojo/parser","dijit/form/TextBox","dijit/form/SimpleTextarea","dijit/form/Textarea","dijit/form/NumberTextBox","dijit/form/CurrencyTextBox","dijit/form/NumberSpinner","dijit/form/ValidationTextBox","dijit/form/DateTextBox","dijit/form/TimeTextBox","dojo/domReady!"]);
+    </script>
+</body>
+</html>

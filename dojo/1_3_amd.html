@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<!--
+    AMDの利用：require, dojo/dom, dojo/domReady!
+
+    このサンプルでは、AMDを利用したコンポーネント読み込みを行っている。
+    前回のサンプルでは、dojoの基本コンポーネント群は全てロードされるため
+    ページの読み込みが遅くなる可能性がある（ほとんど問題にはならないと思うが・・・）
+    そのため、必要に応じてコンポーネントをロードするように変更する
+
+    １．Dojo非同期設定
+        data-dojo-config="async:ture"を指定することで、コンポーネントの呼び出しを
+        プログラムで制御することができる
+
+    2. require([<component A>, <component B>, ...], <コールバック(componentA, componentB...)>)
+        コンポーネントのロードはrequireを用いる
+
+    3. dojo/dom
+        DOM操作を行うためのコンポーネント
+
+    4. dojo/domReady!
+        このコンポーネントを指定すると、コールバックの実行がonload時になる（readyと同様）
+
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+.testClass {
+    color: red;
+}
+</style>
+</head>
+<body>
+    <h1 id="test">TEST</h1>
+    <h1 class="testClass">TEST CLASS</h1>
+    <div>
+        <span name="testName">NAME!</span>
+        <a href="http://www.google.com">click!</a>
+        <span>
+            <a>test</a>
+        </span>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js" data-dojo-config="async:true"></script>
+    <script>
+        require(["dojo/dom", "dojo/domReady!"], function(dom){
+            var test = dom.byId("test");
+            console.log(test.innerHTML);
+        });
+
+    </script>
+</body>
+</html>

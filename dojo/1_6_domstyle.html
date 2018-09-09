@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<!--
+    DOMスタイル操作： "dojo/dom-style" => domstyle
+    
+    <value> = domstyle.get(<node>, <property>)　　：スタイルの取得
+    domstyle.set(<node>, <property>, <value>)　　 ：スタイルの設定
+    <sytles> = domstyle.getComputedStyle(<node>)  : スタイルを連想配列で取得
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+    .test {
+        width:100px;
+        height:200px;
+        background-color: pink;
+        text-align:right;
+        border:1px;
+    }
+
+</style>
+</head>
+<body>
+    <div id="div">マウスカーソルを合わせてください。</div>
+    <button id="showDiv">表示</button>
+    <button id="hideDiv">非表示</button>
+    <div id="domstyle" class="test">dom style</div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true"></script>
+    <script>
+        require(["dojo/dom", "dojo/on", "dojo/mouse", "dojo/dom-style", "dojo/domReady!"], function(dom, on, mouse, domstyle){
+            var div = dom.byId("div");
+            var showDiv = dom.byId("showDiv");
+            var hideDiv = dom.byId("hideDiv");
+            var domstyleDiv = dom.byId("domstyle");
+
+            on(div, mouse.enter, function(){
+                div.innerHTML = "width : " + domstyle.get(div, "width");
+                div.style.background = "yellow";
+            });
+
+            on(div, mouse.leave, function(){
+                div.style.background = "white";
+            });
+
+            on(showDiv, "click", function(){
+                div.style.display = "block";
+                var styles = domstyle.getComputedStyle(domstyleDiv);
+                div.innerHTML = "styles:" + styles.width + " color:" + styles.backgroundColor;
+            });
+
+            on(hideDiv, "mousedown", function(event){  // mouse.downは動作しなかった
+                if (mouse.isLeft(event)) {
+                    alert("mouse left clicked");
+                    div.style.display = "none";
+                } else if (mouse.isRight(event)) {
+                    alert("mouse right clicked");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

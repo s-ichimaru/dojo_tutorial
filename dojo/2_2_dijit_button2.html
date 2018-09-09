@@ -1,0 +1,32 @@
+
+<!DOCTYPE HTML>
+<!--
+    Dijit Button(dynamic create)
+
+    javascriptで動的にボタンを生成する
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dijit/themes/claro/claro.css">
+<style></style>
+</head>
+<body class="claro">
+    <div id="test"></div>
+
+    <!-- script -->
+	<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true,parseOnLoad:true"></script>
+    <script>
+        require(["dojo/dom-construct", "dijit/form/Button","dojo/domReady!"], function(domConstruct, dijitButton){
+
+            // div内の先頭にbuttonタグを追加する
+            var button = domConstruct.create("button", {id:"btn"}, "test", "first");
+
+            // dijitでボタンを生成する
+            button = new dijitButton({label:"click me!", onClick:function(){alert('Click!');}}, button);
+            button.startup();
+        });
+    </script>
+</body>
+</html>

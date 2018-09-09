@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+</style>
+</head>
+<body>
+    <span id="parent">
+        <div id="child">子</div>
+    </span>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true"></script>
+<script>
+    require(["dojo/query", "dojo/NodeList-traverse"], function(query){
+        // #childに最も近いspanを探す
+        var node = query("#child").closest("span");
+        alert(node.length);
+        alert(node[0].innerHTML);
+    });
+</script>
+</html>

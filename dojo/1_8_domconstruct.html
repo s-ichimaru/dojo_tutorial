@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<!--
+    DOM構築： dojo/on => domconstruct
+
+    [DOMの配置]
+        domconstract.place(<node>,<refNode>,<pos>) 
+        <node>    - 配置するノード※1
+        <pos> first   - 対象Node内の先頭に配置 
+        <refNode> - 参照ノード※1
+                <none>  - 対象Node内の最後に配置
+                only    - 対象Node内の全てを置き換える
+                before  - 対象Nodeの前に配置
+                after   - 対象Nodeの後に配置
+                replace - 対象Nodeの置き換え
+                
+    [DOMの生成]
+    domconstruct.create(<tag>, <attrs>, refNode, pos) 
+        <tag>  - 生成するHTMLタグ
+        <attr> - HTML属性(+innerHTML)をハッシュ形式で指定する
+                    {id:"1", style: { color: "red" }, innerHTML:"test"}
+        <refNode> - 参照ノード※1
+        <pos> - placeと同様
+
+    [DOMの存在チェック]
+    <boolean> domconstruct.empty(<node>) 
+        <node> - 判定するノード※1
+
+    [DOMの削除]
+    domconstruct.destroy(<node>)
+        <node> - 削除するノード※1
+
+    ※１：element または タグ属性のid(String)
+-->
+<html>
+<head>
+<heta charaset="utf-8"/>
+<title>dojo study</title>
+<style>
+</style>
+</head>
+<body>
+    <div id="list">
+        <div id="test1">1番目</div>
+        <div id="test2">2番目</div>
+        <div id="test3" style="color:red">3番目</div>
+        <div id="test4">4番目</div>
+        <div id="test5">5番目</div>
+    </div>
+    <button id="move3to1">3to1</button>
+    <button id="replaceAll">replaceAll</button>
+    <button id="create">create</button>
+    <button id="delete">delete</button>
+
+    <!-- script -->
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.13.0/dojo/dojo.js" data-dojo-config="async:true"></script>
+    <script>
+        require(["dojo/dom","dojo/dom-construct","dojo/on","dojo/domReady!"],function(dom,domconstruct,on){
+
+            on(dom.byId("move3to1"), "click", function(){
+                domconstruct.place("test3", "list", "first");
+            });
+            on(dom.byId("replaceAll"), "click", function(){
+                domconstruct.place("test3", "list", "replace"); //listのdivが置換される
+            });
+            on(dom.byId("create"), "click", function(){
+                domconstruct.create("div", {id:"test6",innerHTML:"6番目"}, "list", "last");
+            });
+            on(dom.byId("delete"), "click", function(){
+                if(domconstruct.empty("test6")) {
+                    domconstruct.destroy("test6");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
