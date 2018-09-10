@@ -1,8 +1,8 @@
--------------------------------------------------
+--------------------------------------------------------------------
 
 gitの基本
 
--------------------------------------------------
+--------------------------------------------------------------------
 
 gitとは分散リポジトリを用いたバージョン管理システム
 差分ではなく、スナップショットで記録する
@@ -27,11 +27,46 @@ gitとは分散リポジトリを用いたバージョン管理システム
 ・ワークツリー
 　ファイルを変更する作業場
 
--------------------------------------------------
+--------------------------------------------------------------------
+
+Git for Windowsインストール
+
+--------------------------------------------------------------------
+
+
+(1) Select Components ⇒　デフォルトでOK
+
+(2) Adjusting your PATH environment
+　○ Use Git Bash only
+　● Run Git from the Windows Command Prompt
+　○ Run Git and included Unix tools from the Windows Command Prompt
+※デフォルトは１番目が選択されている
+
+２番目にするとPowerShellでもgitコマンドが使用できる。
+bashのみでよいのであれば１でOK。
+
+(3) レポジトリへのチェックイン、チェックアウト時の改行の取り扱い
+
+　○ Checkout Windows-style, commit Unix-style line endings
+　　チェックアウト時に改行コードを[LF]から[CR+LF]に変換し、コミットする時に[CR+LF]を[LF]に変換する。
+　〇 Checkout as-is, commit Unix-style line endings
+　　チェックアウト時は改行コードを変換せず、コミット時のみ[CR+LF]を[LF]に変換する。
+　● Checkout as-is, commit as-is
+　　チェックアウト時もコミット時も改行コードを変換しない。
+
+※デフォルトは１番目が選択されている
+バイナリにも適応され問題が発生することがあるらしいので、
+改行コードは変換しないにしておくほうが無難。
+なお、リポジトリにCRLFが入っても問題ないとのこと。
+
+誤って１でインストールした場合、
+git config --global core.fscache true
+で修正可能
 
 
 --------------------------------------------------------------------
 １．リポジトリの作成と環境設定(test1)
+--------------------------------------------------------------------
 ・git init
 ・git config --global user.name "利用ユーザー名"
 ・git config --global user.email 利用ユーザーのメールアドレス
@@ -55,6 +90,7 @@ $ git config --global user.email 利用ユーザーのメールアドレス
 
 --------------------------------------------------------------------
 ２．GitHubからatomリポジトリをコピー(test2)
+--------------------------------------------------------------------
 ・git clone <リポジトリ名>
 
 mkdir test2
@@ -71,6 +107,7 @@ $ git clone https://github.com/atom/atom.git
 
 --------------------------------------------------------------------
 ３．ファイルの変更とコミット(test3)
+--------------------------------------------------------------------
 ・git add <ファイル名>
 ・git add <ディレクトリ名>
 ・git add .  (all)
@@ -99,6 +136,7 @@ gitがLFをCRLFに変換するための警告
 
 --------------------------------------------------------------------
 ４．変更の確認(test3)
+--------------------------------------------------------------------
 ・git status
 
 $ git status
@@ -131,6 +169,7 @@ $ git commit -v
 
 --------------------------------------------------------------------
 ５．差分の確認(test3)
+--------------------------------------------------------------------
 
 #git addする前の変更分
 ・$git diff
@@ -167,6 +206,7 @@ $ git commit -m "git diff テスト"
 
 --------------------------------------------------------------------
 ６．変更履歴(test3)
+--------------------------------------------------------------------
 ・$ git log
 ・$ git log --oneline     #一行のみ
 ・$ git log -p index.html #対象ファイル指定
@@ -200,6 +240,7 @@ Date:   Sat Sep 8 18:13:36 2018 +0900
 
 --------------------------------------------------------------------
 ７．ファイルの削除(test3)
+--------------------------------------------------------------------
 
 $ git rm <ファイル名>
 $ git rm -r <ディレクトリ名>
@@ -224,6 +265,7 @@ $ git commit -m "ファイル削除"
 
 --------------------------------------------------------------------
 ８．ファイルの移動(test3)
+--------------------------------------------------------------------
 ・$ git mv <旧ファイル名> <新ファイル名>
 
 $ git mv testfile.txt testfile2.txt
@@ -245,6 +287,7 @@ nothing to commit, working tree clean
 
 --------------------------------------------------------------------
 ９．GitHubプッシュ(github_test)
+--------------------------------------------------------------------
 
 ９－１．GitHubのユーザ登録
 https://github.com/
@@ -275,4 +318,199 @@ $ git remote add origin https://github.com/(ユーザー)/(リポジトリ名).g
 #push(-u を指定すると次回以降はgit pushのみで行える）ユーザー、パスワードを聞かれるので入力
 $ git push -u origin master
 
+
+--------------------------------------------------------------------
+１０．ファイルの変更を取り消す(test4)
+--------------------------------------------------------------------
+・$ git checkout -- <ファイル名>
+・$ git checkout -- <ディレクトリ名>
+・$ git checkout -- .                 #全変更を取り消す
+
+※--はブランチ名を指定した際にgitがファイル名を判断するため指定する
+
+$ git init
+Initialized empty Git repository in D:/dev/git/tutorial/test4/.git/
+
+※test.txtの一行記入
+
+$ git add .
+
+$ git commit
+[master (root-commit) 8c60afb] test
+ 1 file changed, 1 insertion(+)
+ create mode 100644 test.txt
+
+※test.txt変更
+
+$ git checkout .
+
+test.txtの変更が取り消されている
+
+
+--------------------------------------------------------------------
+１１．ステージの変更を取り消す(test4)
+--------------------------------------------------------------------
+・$ git reset HEAD <ファイル名>
+・$ git reset HEAD <ディレクトリ名>
+・$ git reset HEAD .
+
+ステージのみの変更を取り消すことに注意
+ワークツリーの取り消しはcheckoutを行う
+HEADは最新を示す
+
+※test.txtを変更
+
+$ git add test.txt
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   test.txt
+
+
+$ git reset HEAD test.txt
+Unstaged changes after reset:
+M       test.txt
+
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   test.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
+--------------------------------------------------------------------
+１２．直前のコミットを修正(test4)
+--------------------------------------------------------------------
+・$ git commit --amend
+
+※リモートリポジトリにpushした場合は使用してはダメ
+
+$ git commit -m "test amend"
+[master 0c5b5aa] test amend
+ 1 file changed, 2 insertions(+)
+
+$ git log
+commit 0c5b5aa3ef8a2feca8c02c9249b7f64b875f6faa (HEAD -> master)
+Author: 
+Date:   Mon Sep 10 17:50:50 2018 +0900
+
+    test amend
+
+commit 0dbc7674527525aeb03e862683397420260dec69
+Author: 
+Date:   Mon Sep 10 17:31:07 2018 +0900
+
+    test3
+
+$ git commit --amend
+[master ccebc55] test amend 2
+ Date: Mon Sep 10 17:50:50 2018 +0900
+ 1 file changed, 2 insertions(+)
+
+$ git log
+commit ccebc5502bce6f3254c7586f3f45855e8d6ee141 (HEAD -> master)
+Author: 
+Date:   Mon Sep 10 17:50:50 2018 +0900
+
+    test amend 2
+
+
+--------------------------------------------------------------------
+１３．リモートの表示
+-------------------------------------------------------------------
+・$git remote
+・$git remote -v   #URL表示
+
+$ git remote
+origin
+
+$ git remote -v
+origin  https://github.com/....git (fetch)
+origin  https://github.com/....git (push)
+
+
+--------------------------------------------------------------------
+１４．リモートの複数登録
+-------------------------------------------------------------------
+
+git remote add test1 https://～
+git remote add test2 https://～
+
+git push -u test1 master
+git push -u test2 master
+
+
+--------------------------------------------------------------------
+１５．リモートから情報を取得する（fatch）
+-------------------------------------------------------------------
+・$ git fetch <リモート名>
+・$ git branch -a            #ブランチをすべて取得する
+・$ git marge <リモート/ブランチ>
+
+※GitHubで直接ファイル作成
+
+#リモートからローカルリポジトリ（ブランチ）にフェッチする
+$ git fetch origin
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/・・・
+   8ec8728..5f7756d  master     -> origin/master
+
+#ブランチの情報を出力
+$ git branch -a
+* master
+  remotes/origin/master
+
+#ブランチからワークツリーにチェックアウトする
+$ git checkout remotes/origin/master
+Note: checking out 'remotes/origin/master'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 5f7756d Create test2.txt
+
+# 元に戻す
+$ git checkout master
+Previous HEAD position was 5f7756d Create test2.txt
+Switched to branch 'master'
+Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+# ブランチからワークツリーにマージする
+$ git merge origin/master
+Already up to date.
+
+
+--------------------------------------------------------------------
+１６．リモートから情報を取得してマージする（pull）
+-------------------------------------------------------------------
+・git pull <リモート名><ブランチ名>
+・git pull
+
+fetch → margeと同様
+
+$ git pull origin master
+remote: Counting objects: 6, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 6 (delta 0), reused 3 (delta 0), pack-reused 0
+Unpacking objects: 100% (6/6), done.
+From https://github.com/...
+ * branch            master     -> FETCH_HEAD
+ * [new branch]      master     -> origin/master
 
