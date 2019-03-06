@@ -1,0 +1,10 @@
+マキネッタテスト環境
+
+https://github.com/Macchinetta/spring-functionaltest/wiki/Tested-Environment
+
+Amazon Corretto 8（アマゾン コレット）
+https://aws.amazon.com/jp/corretto/
+
+Correttoは、Amazonの長期サポートを含むOpen Java Development Kit（OpenJDK）のビルド
+ライセンス：オープンソース
+サポート：Corretto 8の場合は2023年6月
